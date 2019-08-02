@@ -5,10 +5,12 @@ function getIndex(req,res){
     res.render('index',{arr});
   })
 }
+
 // 打开修改页面
 function getedit(req,res){
   res.render('edit');
 }
+// 修改英雄的页面
 function byiddata(req,res){
   let id =req.query.id;
   model.getAllHero(function(arr){
@@ -19,38 +21,34 @@ function byiddata(req,res){
         });
       })
 }
-// 修改页面修改英雄信息接口
+// 修改页面修改英雄完成
 function changeherouser(req,res){
       let data=req.body;
       model.changedata(data)
       res.send({code:200,msg:'修改成功'})
-
 }
+// 添加英雄页面
+function add (req,res){
+  res.render('add');
+  }
+
+
 // 英雄列表删除英雄信息
 function delherouser(req,res){
   // 接收id数据
   let id = req.query.id;
   // console.log(id);
-  // data=读取数据库的数据
-  model.getAllHero((hh) => {
-      // 根据id对读取的data的id遍历，当id相同slipe
-      hh.forEach((e, i) => {
-          if (e.id == id) {
-              // 第i个开始删除一个数
-              hh.splice(i, 1);
-          }
-      });
-      // 把删除后的数据写入数据库
-      model.writeFile(hh)
-      // 返回删除成功的信息
-      res.send({ code: 200, msg: '删除成功' })
-  });
-}
-// 添加英雄页面
-function add (req,res){
-res.render('add');
-}
+// 删除数据库的数据
+   model.delherouser(id,(hh)=>{
+    //  判断数据库返回的数据
+    if(hh.affectedRows===1){
+      res.send({code:200,msg:'删除成功'})
+    }else{
+      res.send({code:404,msg:'删除失败，请联系管理员'})
+    }
+   })
 
+}
 // 添加英雄
 function addherouser(req,res){
   // 接收数据

@@ -10,31 +10,33 @@ let conmo=mysql.createConnection({
 })
 
 module.exports = {
-  getAllHero,getHeroById,writeFile,changedata,
+  getAllHero,writeFile,changedata,delherouser,
 };
+
 // 获取数据库的所有英雄信息
 function getAllHero(callback){
   // 获取数据库的代码段
-  let sql=`SELECT * FROM heros`
+  let sql=`SELECT * FROM heros WHERE isdelete=0`
   conmo.query(sql,(err,result)=>{
     if (err)console.log(err);
     callback(result)
   })
 }
+// 数据库删除（软删除）
+function delherouser(id,callback){
+let sql=`update heros set isdelete=1 where id=${id}`
+conmo.query(sql,(err,result)=>{
+if(err)console.log(err);
+// 数据库操作结果返回给上一层
+callback(result)
+})
+}   
+
+// 数据库数据修改
 function changedata(arr){
   let sql=`UPDATE heros SET \`name\`= '${arr.name}' ,gender='${arr.gender}',img='${arr.img}' WHERE id=${arr.id}`;
   conmo.query(sql,(err,result)=>{
     if (err)console.log(err);
-  })
-}
-
-
-function getHeroById(id,callback){
-  this.getAllHero((arr)=>{
-    let target = arr.find(e=>{
-      return e.id == id;
-    });
-    callback(target);
   })
 }
 // 写入数据库
