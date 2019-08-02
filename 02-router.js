@@ -30,6 +30,8 @@ controller.add(req,res)
 // 添加英雄
 router.post('/addherouser',(req,res)=>{
 controller.addherouser(req,res)
+
+
 })
 
 module.exports = router;

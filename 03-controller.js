@@ -59,12 +59,20 @@ function addherouser(req,res){
   // 接收数据
   let data=req.body
   //  写进去数据库
-   model.writeFile(data);
-   res.send({code:200,msg:'添加成功'})
+
+   model.writeFile(data,(hh)=>{
+    if(hh.affectedRows===1){
+      res.send({code:200,msg:'添加成功'})
+    }else{
+      res.send({code:404,msg:'添加失败，请联系管理员'})
+    }
+   });
+  
 }
 
 const controller = {
   getIndex,getedit,byiddata,changeherouser,delherouser,addherouser,add
 }
+
 
 module.exports = controller;

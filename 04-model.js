@@ -1,4 +1,3 @@
-const fs = require('fs');
 const mysql=require('mysql')
 // 请求数据库
 let conmo=mysql.createConnection({
@@ -40,11 +39,12 @@ function changedata(arr,callback){
     callback(result)
   })
 }
+
 // 写入数据库
-function writeFile(arr){
-  let content = JSON.stringify(arr);
-  let sql=`INSERT INTO heros SET \`name\`= '${content.name}' ,gender='${content.gender}',img='${content.img}'`
+function writeFile(arr,callback){
+  let sql=`INSERT INTO heros SET \`name\`= '${arr.name}' ,gender='${arr.gender}',img='${arr.img}'`
   conmo.query(sql,(err,result)=>{
     if(err)console.log(err);
+    callback(result);
   })
 }

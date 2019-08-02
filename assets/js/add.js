@@ -20,6 +20,7 @@ $.ajax({
     success:function(hh){
         if (hh.code==200){
             alert(hh.msg)
+            location.href ='/index';
         }
     }
 })
