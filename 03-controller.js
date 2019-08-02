@@ -1,5 +1,5 @@
 const model = require('./04-model');
-
+// 获取主页面
 function getIndex(req,res){
   model.getAllHero((arr)=>{
     res.render('index',{arr});
@@ -21,21 +21,10 @@ function byiddata(req,res){
 }
 // 修改页面修改英雄信息接口
 function changeherouser(req,res){
-  let data=req.body;
-  data.id=parseInt(data.id);
-  model.getAllHero(function(arr){
-        for(let i=0;i<arr.length;i++){
-          if (arr[i].id==data.id){
-            arr[i]=data;
-            // console.log(arr);
-            model.writeFile(arr)
-            res.send({code:200,msg:'修改成功'})
-            break;
-          }
-        };
- 
-    // 吧数据顶掉后要写入数据库
-  })
+      let data=req.body;
+      model.changedata(data)
+      res.send({code:200,msg:'修改成功'})
+
 }
 // 英雄列表删除英雄信息
 function delherouser(req,res){
@@ -66,20 +55,11 @@ res.render('add');
 function addherouser(req,res){
   // 接收数据
   let data=req.body
-model.maxdataid((id)=>{
-  // 创建一个当前最大的id给data
-  data.id=id+1;
- model.getAllHero((arr)=>{
-  //  把data倒进去arr
-  let oldarr=arr;
-   oldarr.push(data)
-  //  console.log(oldarr);
   //  写进去数据库
-   model.writeFile(oldarr);
+   model.writeFile(data);
    res.send({code:200,msg:'添加成功'})
- })
-})
 }
+
 const controller = {
   getIndex,getedit,byiddata,changeherouser,delherouser,addherouser,add
 }
