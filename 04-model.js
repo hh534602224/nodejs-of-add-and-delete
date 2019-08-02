@@ -33,10 +33,11 @@ callback(result)
 }   
 
 // 数据库数据修改
-function changedata(arr){
+function changedata(arr,callback){
   let sql=`UPDATE heros SET \`name\`= '${arr.name}' ,gender='${arr.gender}',img='${arr.img}' WHERE id=${arr.id}`;
   conmo.query(sql,(err,result)=>{
     if (err)console.log(err);
+    callback(result)
   })
 }
 // 写入数据库
