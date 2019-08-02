@@ -31,7 +31,6 @@ controller.add(req,res)
 router.post('/addherouser',(req,res)=>{
 controller.addherouser(req,res)
 
-
 })
 
 module.exports = router;

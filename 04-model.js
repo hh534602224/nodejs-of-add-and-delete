@@ -42,7 +42,7 @@ function changedata(arr,callback){
 
 // 写入数据库
 function writeFile(arr,callback){
-  let sql=`INSERT INTO heros SET \`name\`= '${arr.name}' ,gender='${arr.gender}',img='${arr.img}'`
+  let sql=`INSERT INTO heros SET \`name\`= '${arr.name}' ,gender='${arr.gender}',img='${arr.img}',isdelete='0'`
   conmo.query(sql,(err,result)=>{
     if(err)console.log(err);
     callback(result);
